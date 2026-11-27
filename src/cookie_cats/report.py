@@ -53,6 +53,21 @@ Every number below is generated from [`results/metrics.json`](results/metrics.js
 - **Caveat worth raising:** the arms are not 50/50 ({c['n_control']:,} vs {c['n_treatment']:,}, sample-ratio-mismatch
   test p = {_p(c['srm_p'])}). {srm_note}
 
+## Power BI report
+
+A four-page Power BI report ([`powerbi/CookieCats.pbip`](powerbi/CookieCats.pbip), PDF:
+[`reports/CookieCats_PowerBI_report.pdf`](reports/CookieCats_PowerBI_report.pdf)) tells the same story for a product
+manager: decision first, then evidence, engagement and power, then the data checks. Retention measures are computed
+live in DAX from the 90,189 player rows; a reconciliation query
+([`powerbi/tools/reconciliation_query.dax`](powerbi/tools/reconciliation_query.dax)) checks the model against
+`results/metrics.json` - 13/13 checks pass.
+
+![Power BI - Decision](figures/powerbi_01_decision.png)
+
+| | |
+|---|---|
+| ![Evidence](figures/powerbi_02_evidence.png) | ![Engagement and power](figures/powerbi_03_engagement_and_power.png) |
+
 ## Why the gate matters
 
 A gate is a deliberate pause: the player waits, invites friends or pays to continue. The case for
@@ -142,6 +157,11 @@ $env:KAGGLE_API_TOKEN = "<your token>"   # or ~/.kaggle/kaggle.json
 kaggle datasets download -d yufengsui/mobile-games-ab-testing -p data/raw --unzip
 python -m cookie_cats      # writes results/metrics.json, figures/, README.md
 pytest -q
+# Power BI (optional)
+python -m cookie_cats.powerbi_export   # writes powerbi/data/*.csv and the reconciliation query
+python powerbi/tools/build_model.py      # TMDL model (only needed after changing tables/measures)
+node powerbi/tools/build_report.js       # PBIR pages from the approved spec in _brief/report-spec.md
+# open powerbi/CookieCats.pbip in Power BI Desktop, set the CsvFolder parameter to this repo's powerbi/data folder (with a trailing backslash), then Refresh
 ```
 
 ## Repo layout
@@ -151,6 +171,9 @@ src/cookie_cats/analysis.py   checks, tests, bootstrap, Bayesian, power, sizing 
 src/cookie_cats/figures.py    the four charts in figures/
 src/cookie_cats/report.py     renders this README from metrics.json
 tests/                        unit tests on the statistics (known answers) and on the data contract
+src/cookie_cats/powerbi_export.py  CSV tables + reconciliation query for the Power BI model
+powerbi/                      CookieCats.pbip: TMDL model, PBIR report, generators (tools/)
+_brief/report-spec.md         approved page-by-page spec the report is generated from
 ```
 """
     out = ROOT / "README.md"

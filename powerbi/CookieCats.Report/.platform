@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "CookieCats"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "f9bba9c0-75fd-4c56-9f16-3fa16850cf7e"
+  }
+}

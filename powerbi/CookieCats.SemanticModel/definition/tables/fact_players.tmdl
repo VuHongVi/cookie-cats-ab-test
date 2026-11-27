@@ -1,0 +1,70 @@
+table fact_players
+	lineageTag: f8e0e1ec-4bf9-5319-ac6d-5f2a24bf1c70
+
+	column userid
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 50be6e56-f8f5-5f79-b7d2-feba39e7becc
+		summarizeBy: none
+		sourceColumn: userid
+
+	column version
+		dataType: string
+		lineageTag: 2c0bdd4e-282b-5eb5-95ce-bdb5f71cc438
+		summarizeBy: none
+		sourceColumn: version
+
+	column arm_label
+		dataType: string
+		lineageTag: 055ae432-54fa-5efc-b9aa-f5b266924bb6
+		summarizeBy: none
+		sourceColumn: arm_label
+		sortByColumn: arm_order
+
+	column arm_order
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 8b2080de-21e6-5263-b553-d6eb9ebba341
+		summarizeBy: none
+		sourceColumn: arm_order
+
+	column sum_gamerounds
+		dataType: int64
+		formatString: #,0
+		lineageTag: e0f89dbf-1530-5fca-afb1-85b24410f5b1
+		summarizeBy: none
+		sourceColumn: sum_gamerounds
+
+	column retention_1
+		dataType: int64
+		formatString: 0
+		lineageTag: d1fe4f3b-3d4e-50cd-ab44-77babc563bf4
+		summarizeBy: none
+		sourceColumn: retention_1
+
+	column retention_7
+		dataType: int64
+		formatString: 0
+		lineageTag: 1a63decb-775c-57d2-999d-d54139b709ef
+		summarizeBy: none
+		sourceColumn: retention_7
+
+	column is_rounds_outlier
+		dataType: int64
+		formatString: 0
+		lineageTag: 82277432-0978-5df5-b21d-5bb8118c4130
+		summarizeBy: none
+		sourceColumn: is_rounds_outlier
+
+	partition fact_players = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(CsvFolder & "fact_players.csv"), [Delimiter=",", Columns=8, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"userid", Int64.Type}, {"version", type text}, {"arm_label", type text}, {"arm_order", Int64.Type}, {"sum_gamerounds", Int64.Type}, {"retention_1", Int64.Type}, {"retention_7", Int64.Type}, {"is_rounds_outlier", Int64.Type}}, "en-US")
+				in
+				    Typed
+
