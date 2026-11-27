@@ -1,0 +1,78 @@
+{
+  "checks": {
+    "rows": 90189,
+    "unique_users": 90189,
+    "duplicate_users": 0,
+    "null_cells": 0,
+    "n_control": 44700,
+    "n_treatment": 45489,
+    "share_treatment": 0.504374,
+    "srm_chi2": 6.902405,
+    "srm_p": 0.008608,
+    "rounds_outliers": 1,
+    "rounds_outlier_max": 49854,
+    "zero_round_share": 0.044285
+  },
+  "tests": {
+    "retention_1": {
+      "p_control": 0.448188,
+      "p_treatment": 0.442283,
+      "diff_pp": -0.590517,
+      "ci_low_pp": -1.239244,
+      "ci_high_pp": 0.05821,
+      "rel_change": -0.013176,
+      "z": -1.784086,
+      "p_value": 0.07441,
+      "se_pp": 0.330989,
+      "boot_ci_low_pp": -1.236413,
+      "boot_ci_high_pp": 0.056053,
+      "boot_share_treatment_worse": 0.9617,
+      "bayes_prob_control_better": 0.963195,
+      "mde_pp_80power": 0.9273,
+      "p_holm": 0.07441
+    },
+    "retention_7": {
+      "p_control": 0.190201,
+      "p_treatment": 0.182,
+      "diff_pp": -0.82013,
+      "ci_low_pp": -1.328155,
+      "ci_high_pp": -0.312104,
+      "rel_change": -0.043119,
+      "z": -3.164359,
+      "p_value": 0.001554,
+      "se_pp": 0.259201,
+      "boot_ci_low_pp": -1.327212,
+      "boot_ci_high_pp": -0.29996,
+      "boot_share_treatment_worse": 0.9994,
+      "bayes_prob_control_better": 0.999235,
+      "mde_pp_80power": 0.726107,
+      "p_holm": 0.003108
+    }
+  },
+  "rounds": {
+    "mean_control": 51.342111,
+    "mean_treatment": 51.298776,
+    "median_control": 17.0,
+    "median_treatment": 16.0,
+    "mannwhitney_p": 0.050892,
+    "prob_superiority": 0.496248,
+    "share_40plus_control": 0.303474,
+    "share_40plus_treatment": 0.303964
+  },
+  "d7_given_d1": {
+    "control": 0.333234,
+    "treatment": 0.323376
+  },
+  "impact_per_100k_installs": {
+    "d7_players_lost": 820.129832,
+    "d7_players_lost_low": 312.104421,
+    "d7_players_lost_high": 1328.155242
+  },
+  "decision": "keep_gate_30",
+  "params": {
+    "alpha": 0.05,
+    "seed": 20261127,
+    "n_boot": 10000,
+    "rounds_cap": 5000
+  }
+}
