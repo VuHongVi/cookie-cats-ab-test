@@ -1,0 +1,40 @@
+table fact_bootstrap_hist
+	lineageTag: 85a77a8b-2958-51fe-a519-3bc9e4c33447
+
+	column metric
+		dataType: string
+		lineageTag: 8e888eb4-591a-5ca2-8584-13b603fa8751
+		summarizeBy: none
+		sourceColumn: metric
+
+	column bin_center_pp
+		dataType: double
+		formatString: 0.00
+		lineageTag: 589b3151-54d8-51e1-9f20-43587de9c655
+		summarizeBy: none
+		sourceColumn: bin_center_pp
+
+	column resamples
+		dataType: int64
+		formatString: #,0
+		lineageTag: ae7f83d2-467a-5a74-99de-249bbd947345
+		summarizeBy: none
+		sourceColumn: resamples
+
+	column in_ci
+		dataType: int64
+		formatString: 0
+		lineageTag: 66efc2f6-a4ba-5a36-a780-3b88a2d97c8e
+		summarizeBy: none
+		sourceColumn: in_ci
+
+	partition fact_bootstrap_hist = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(CsvFolder & "fact_bootstrap_hist.csv"), [Delimiter=",", Columns=4, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"metric", type text}, {"bin_center_pp", type number}, {"resamples", Int64.Type}, {"in_ci", Int64.Type}}, "en-US")
+				in
+				    Typed
+

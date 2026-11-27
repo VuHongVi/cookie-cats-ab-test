@@ -1,0 +1,25 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_QueryOrder = ["fact_bootstrap_hist", "fact_checks", "fact_players", "fact_power_curve", "fact_rounds_survival", "fact_tests", "kpi_metrics", "_Measures", "CsvFolder"]
+
+annotation PBI_ProTooling = ["MCP-PBIModeling","DevMode"]
+
+ref table fact_bootstrap_hist
+ref table fact_checks
+ref table fact_players
+ref table fact_power_curve
+ref table fact_rounds_survival
+ref table fact_tests
+ref table kpi_metrics
+ref table _Measures
+
+ref cultureInfo en-US
+

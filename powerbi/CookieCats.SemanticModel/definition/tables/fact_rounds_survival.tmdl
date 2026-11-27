@@ -1,0 +1,42 @@
+table fact_rounds_survival
+	lineageTag: c4427c3f-bb45-5605-9d35-f37d5b18619a
+
+	column arm_label
+		dataType: string
+		lineageTag: 8594a243-1d21-5f48-8a62-cc691f4f492d
+		summarizeBy: none
+		sourceColumn: arm_label
+		sortByColumn: arm_order
+
+	column arm_order
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: b27e8c27-12f0-5900-93f8-eadc7e466ee2
+		summarizeBy: none
+		sourceColumn: arm_order
+
+	column rounds
+		dataType: int64
+		formatString: 0
+		lineageTag: 832bba16-c3e6-5328-b7df-7b0b0c45e4a7
+		summarizeBy: none
+		sourceColumn: rounds
+
+	column share_at_least
+		dataType: double
+		formatString: 0%
+		lineageTag: dc326948-010f-5e0d-ac91-13758934aebf
+		summarizeBy: none
+		sourceColumn: share_at_least
+
+	partition fact_rounds_survival = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(CsvFolder & "fact_rounds_survival.csv"), [Delimiter=",", Columns=4, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"arm_label", type text}, {"arm_order", Int64.Type}, {"rounds", Int64.Type}, {"share_at_least", type number}}, "en-US")
+				in
+				    Typed
+

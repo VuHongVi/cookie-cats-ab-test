@@ -1,0 +1,25 @@
+table kpi_metrics
+	lineageTag: 1c76f2a0-b1e3-5ac2-b0f9-df7e82c5dda4
+
+	column metric
+		dataType: string
+		lineageTag: 552c697e-0373-560d-ac78-ef808c1aabf9
+		summarizeBy: none
+		sourceColumn: metric
+
+	column value
+		dataType: double
+		lineageTag: 24693abb-dd5e-5d30-8f4f-ba67a7bd7041
+		summarizeBy: none
+		sourceColumn: value
+
+	partition kpi_metrics = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(CsvFolder & "kpi_metrics.csv"), [Delimiter=",", Columns=2, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"metric", type text}, {"value", type number}}, "en-US")
+				in
+				    Typed
+

@@ -1,0 +1,39 @@
+table fact_checks
+	lineageTag: b03b0902-f8ab-5bf3-9c85-8aaa10e377cf
+
+	column check_order
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: f3d2599d-bc63-5a69-a5ab-def6084aa942
+		summarizeBy: none
+		sourceColumn: check_order
+
+	column check
+		dataType: string
+		lineageTag: 2ba4898c-df5b-5fed-9a88-b8d27a148f21
+		summarizeBy: none
+		sourceColumn: check
+
+	column value_text
+		dataType: string
+		lineageTag: ccebfa84-5ae8-5c5e-ae4f-5e633a627113
+		summarizeBy: none
+		sourceColumn: value_text
+
+	column verdict
+		dataType: string
+		lineageTag: 47202360-b147-51bc-9c8a-8d4457985aa8
+		summarizeBy: none
+		sourceColumn: verdict
+
+	partition fact_checks = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(CsvFolder & "fact_checks.csv"), [Delimiter=",", Columns=4, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"check_order", Int64.Type}, {"check", type text}, {"value_text", type text}, {"verdict", type text}}, "en-US")
+				in
+				    Typed
+

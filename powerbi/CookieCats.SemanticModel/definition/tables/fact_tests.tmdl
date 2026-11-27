@@ -1,0 +1,111 @@
+table fact_tests
+	lineageTag: 11d7a4c2-11f4-5e74-b051-81434579b3b5
+
+	column metric
+		dataType: string
+		lineageTag: 8d9d4f74-10f4-56d6-8ed8-e9d9ff1cd1ae
+		summarizeBy: none
+		sourceColumn: metric
+
+	column metric_label
+		dataType: string
+		lineageTag: 123d62e3-3698-52ce-ba34-4feeaab4498e
+		summarizeBy: none
+		sourceColumn: metric_label
+		sortByColumn: metric_order
+
+	column metric_order
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: b45ef58b-7bf0-5b77-8924-e486c0252e6e
+		summarizeBy: none
+		sourceColumn: metric_order
+
+	column p_control
+		dataType: double
+		formatString: 0.00%
+		lineageTag: 273eda50-9737-59f0-954d-b046cac70e94
+		summarizeBy: none
+		sourceColumn: p_control
+
+	column p_treatment
+		dataType: double
+		formatString: 0.00%
+		lineageTag: b4dfefbd-9082-5d62-8330-47c9c0e125f9
+		summarizeBy: none
+		sourceColumn: p_treatment
+
+	column diff_pp
+		dataType: double
+		formatString: +0.00;-0.00
+		lineageTag: fe4baf0a-cf61-5423-83c6-306e0d944caa
+		summarizeBy: none
+		sourceColumn: diff_pp
+
+	column ci_low_pp
+		dataType: double
+		formatString: +0.00;-0.00
+		lineageTag: 931eabe0-ff9b-5c8b-b84d-18b22924cb22
+		summarizeBy: none
+		sourceColumn: ci_low_pp
+
+	column ci_high_pp
+		dataType: double
+		formatString: +0.00;-0.00
+		lineageTag: 1319cb87-5c16-53bc-a2a0-cdcc7369a7c1
+		summarizeBy: none
+		sourceColumn: ci_high_pp
+
+	column rel_change
+		dataType: double
+		formatString: +0.0%;-0.0%
+		lineageTag: 85a9d181-8edd-580e-8523-dc7b3b96df0c
+		summarizeBy: none
+		sourceColumn: rel_change
+
+	column p_value
+		dataType: double
+		formatString: 0.000
+		lineageTag: 2cb3b859-fcc8-57fb-8ea6-6290894f07a3
+		summarizeBy: none
+		sourceColumn: p_value
+
+	column p_holm
+		dataType: double
+		formatString: 0.000
+		lineageTag: 38f8e919-9661-5a90-99f4-210ce1bce754
+		summarizeBy: none
+		sourceColumn: p_holm
+
+	column boot_share_treatment_worse
+		dataType: double
+		formatString: 0.0%
+		lineageTag: 3755b631-7d20-53cd-a466-050118868e79
+		summarizeBy: none
+		sourceColumn: boot_share_treatment_worse
+
+	column bayes_prob_control_better
+		dataType: double
+		formatString: 0.0%
+		lineageTag: d89bdfce-9318-5272-bfb5-ef275396586d
+		summarizeBy: none
+		sourceColumn: bayes_prob_control_better
+
+	column mde_pp_80power
+		dataType: double
+		formatString: 0.00
+		lineageTag: c16b7ea9-2c1d-570a-a201-9a83120b814b
+		summarizeBy: none
+		sourceColumn: mde_pp_80power
+
+	partition fact_tests = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(CsvFolder & "fact_tests.csv"), [Delimiter=",", Columns=14, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    Typed = Table.TransformColumnTypes(Promoted, {{"metric", type text}, {"metric_label", type text}, {"metric_order", Int64.Type}, {"p_control", type number}, {"p_treatment", type number}, {"diff_pp", type number}, {"ci_low_pp", type number}, {"ci_high_pp", type number}, {"rel_change", type number}, {"p_value", type number}, {"p_holm", type number}, {"boot_share_treatment_worse", type number}, {"bayes_prob_control_better", type number}, {"mde_pp_80power", type number}}, "en-US")
+				in
+				    Typed
+
