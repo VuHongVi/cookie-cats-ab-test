@@ -86,7 +86,9 @@ between them.
 | Outliers | {c['rounds_outliers']} player with {c['rounds_outlier_max']:,} rounds in 14 days (> {m['params']['rounds_cap']:,} is not human play); removed from the rounds analysis only |
 | Never played | {_pct(c['zero_round_share'])} of installs played 0 rounds |
 
-Raw data is not committed (`data/raw/` is git-ignored); see *Reproduce* below.
+A copy of the raw file is kept in [`data/raw/cookie_cats.csv`](data/raw/cookie_cats.csv) so the analysis can be re-run even if the
+Kaggle page disappears. Source and credit: Kaggle `yufengsui/mobile-games-ab-testing` (licence not stated on Kaggle;
+redistributed here, with attribution, for reproducibility only).
 
 ## Method
 
@@ -153,8 +155,8 @@ its detectable size ({t1['mde_pp_80power']:.2f} pp), so "not significant" there 
 ```powershell
 pip install -r requirements.txt
 pip install -e .
-$env:KAGGLE_API_TOKEN = "<your token>"   # or ~/.kaggle/kaggle.json
-kaggle datasets download -d yufengsui/mobile-games-ab-testing -p data/raw --unzip
+# data/raw/cookie_cats.csv is in the repo; to fetch a fresh copy instead:
+#   kaggle datasets download -d yufengsui/mobile-games-ab-testing -p data/raw --unzip
 python -m cookie_cats      # writes results/metrics.json, figures/, README.md
 pytest -q
 # Power BI (optional)
