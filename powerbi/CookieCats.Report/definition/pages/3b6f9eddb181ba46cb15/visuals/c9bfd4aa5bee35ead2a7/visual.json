@@ -27,25 +27,8 @@
                 }
               },
               "queryRef": "fact_rounds_survival.rounds",
-              "nativeQueryRef": "rounds"
-            }
-          ]
-        },
-        "Y": {
-          "projections": [
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Measures"
-                    }
-                  },
-                  "Property": "Share At Least"
-                }
-              },
-              "queryRef": "_Measures.Share At Least",
-              "nativeQueryRef": "Share At Least"
+              "nativeQueryRef": "rounds",
+              "active": true
             }
           ]
         },
@@ -64,6 +47,24 @@
               },
               "queryRef": "fact_rounds_survival.arm_label",
               "nativeQueryRef": "arm_label"
+            }
+          ]
+        },
+        "Y": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Share At Least"
+                }
+              },
+              "queryRef": "_Measures.Share At Least",
+              "nativeQueryRef": "Share At Least"
             }
           ]
         }

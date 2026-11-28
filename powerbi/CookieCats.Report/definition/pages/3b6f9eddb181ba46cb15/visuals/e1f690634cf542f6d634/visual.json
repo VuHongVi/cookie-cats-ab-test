@@ -27,7 +27,8 @@
                 }
               },
               "queryRef": "fact_power_curve.players_per_arm",
-              "nativeQueryRef": "players_per_arm"
+              "nativeQueryRef": "players_per_arm",
+              "active": true
             }
           ]
         },

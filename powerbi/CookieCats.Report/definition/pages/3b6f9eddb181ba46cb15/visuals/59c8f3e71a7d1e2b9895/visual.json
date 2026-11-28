@@ -27,7 +27,8 @@
                 }
               },
               "queryRef": "fact_rounds_survival.arm_label",
-              "nativeQueryRef": "arm_label"
+              "nativeQueryRef": "arm_label",
+              "active": true
             }
           ]
         }

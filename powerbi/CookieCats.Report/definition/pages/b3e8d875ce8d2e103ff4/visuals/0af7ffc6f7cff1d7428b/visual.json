@@ -27,7 +27,8 @@
                 }
               },
               "queryRef": "fact_tests.metric_label",
-              "nativeQueryRef": "metric_label"
+              "nativeQueryRef": "metric_label",
+              "active": true
             }
           ]
         },
@@ -79,8 +80,7 @@
             },
             "direction": "Ascending"
           }
-        ],
-        "isDefaultSort": false
+        ]
       }
     },
     "objects": {

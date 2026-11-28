@@ -27,7 +27,8 @@
                 }
               },
               "queryRef": "fact_bootstrap_hist.bin_center_pp",
-              "nativeQueryRef": "bin_center_pp"
+              "nativeQueryRef": "bin_center_pp",
+              "active": true
             }
           ]
         },
